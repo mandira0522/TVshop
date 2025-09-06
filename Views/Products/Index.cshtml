@@ -1,0 +1,172 @@
+@model IEnumerable<TvShop.Models.Product>
+
+<div class="products-page-container py-5">
+    <div class="container">
+        <!-- Hero Banner Section -->
+        <div class="products-hero mb-5 rounded-4 overflow-hidden position-relative" style="background: linear-gradient(135deg, #051937, #2c5364); height: 220px;">
+            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center px-5">
+                <div class="text-white" style="z-index: 2">
+                    @if (!string.IsNullOrEmpty(Context.Request.Query["brand"]))
+                    {
+                        <h1 class="display-5 fw-bold mb-0">@Context.Request.Query["brand"] <span class="text-warning">TVs</span></h1>
+                        <p class="lead opacity-75 mt-2">Experience premium quality with @Context.Request.Query["brand"] television technology</p>
+                    }
+                    else
+                    {
+                        <h1 class="display-5 fw-bold mb-0">Premium <span class="text-warning">TVs</span></h1>
+                        <p class="lead opacity-75 mt-2">Browse our curated collection of cutting-edge televisions</p>
+                    }
+                </div>
+            </div>
+            <div class="position-absolute top-0 end-0 d-none d-md-block" style="opacity: 0.1; transform: translate(50px, -50px);">
+                <i class="fas fa-tv fa-10x"></i>
+            </div>
+            <div class="position-absolute bottom-0 start-0 w-100 bg-gradient-overlay" style="height: 70px; background: linear-gradient(0deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 100%);"></div>
+        </div>
+
+        <!-- Filters Section -->
+        <div class="filters-section mb-5">
+            <div class="card border-0 rounded-4 shadow-sm">
+                <div class="card-body p-4">
+                    <h5 class="mb-3 fw-bold"><i class="fas fa-filter me-2 text-primary"></i>Filter Products</h5>
+                    <form method="get" class="filter-form">
+                        <div class="row g-3">
+                            <div class="col-lg-4 col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0"><i class="fas fa-search text-muted"></i></span>
+                                    <input type="text" name="search" class="form-control bg-light border-start-0" placeholder="Search by name or features..." value="@Context.Request.Query["search"]" />
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0"><i class="fas fa-tv text-muted"></i></span>
+                                    <select name="category" class="form-select bg-light border-start-0">
+                                        <option value="">All Categories</option>
+                                        @foreach (var category in ViewBag.Categories)
+                                        {
+                                            <option value="@category" selected="@(Context.Request.Query["category"] == category)">@category</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0"><i class="fas fa-building text-muted"></i></span>
+                                    <select name="brand" class="form-select bg-light border-start-0">
+                                        <option value="">All Brands</option>
+                                        @foreach (var brand in ViewBag.Brands)
+                                        {
+                                            <option value="@brand" selected="@(Context.Request.Query["brand"] == brand)">@brand</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-6">
+                                <button type="submit" class="btn btn-primary w-100 py-2"><i class="fas fa-search me-2"></i>Apply Filters</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products Grid -->
+        @if (Model.Any())
+        {
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-4">
+                @foreach (var product in Model)
+                {
+                    <div class="col">
+                        <div class="product-card h-100 rounded-4 shadow-sm overflow-hidden position-relative" style="transition: all 0.3s ease;">
+                            <div class="product-image position-relative overflow-hidden">
+                                <img src="@product.MainImageUrl" class="card-img-top" alt="@product.Name" style="height: 250px; object-fit: cover; transition: transform 0.5s ease;" onerror="this.onerror=null;this.src='/images/placeholder.jpg';">
+                                <div class="product-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" style="background: rgba(0,0,0,0.5); opacity: 0; transition: opacity 0.3s ease;">
+                                    <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id" class="btn btn-light rounded-pill px-4">View Details</a>
+                                </div>
+                            </div>
+                            <div class="position-absolute top-0 end-0 p-3">
+                                <span class="badge bg-primary rounded-pill px-3 py-2">@product.Category</span>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-light text-dark px-3 py-2">@product.Brand</span>
+                                    <span class="price-tag fw-bold text-primary fs-5">₹@product.Price.ToString("N2")</span>
+                                </div>
+                                <h5 class="product-title fw-bold mb-3">@product.Name</h5>
+                                <div class="product-actions d-flex gap-2">
+                                    <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id" class="btn btn-outline-primary flex-grow-1">View Details</a>
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <form method="post" asp-controller="Cart" asp-action="AddToCart" class="add-to-cart-form">
+                                            <input type="hidden" name="productId" value="@product.Id" />
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="fas fa-shopping-cart me-md-2"></i><span class="d-none d-md-inline">Add to Cart</span>
+                                                <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                                            </button>
+                                        </form>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info p-5 text-center rounded-4">
+                <i class="fas fa-info-circle fa-3x mb-3"></i>
+                <h4>No products found</h4>
+                <p class="mb-0">Try adjusting your search criteria or browse all products.</p>
+                <a asp-controller="Products" asp-action="Index" class="btn btn-outline-primary mt-3">View All Products</a>
+            </div>
+        }
+
+        <!-- Additional Products Info -->
+        <div class="row mt-5 g-4">
+            <div class="col-md-4">
+                <div class="card border-0 rounded-4 shadow-sm h-100">
+                    <div class="card-body text-center p-4">
+                        <i class="fas fa-truck-moving fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title fw-bold">Free Shipping</h5>
+                        <p class="card-text text-muted">On all orders above ₹20,000. Get your TV delivered to your doorstep without any additional cost.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 rounded-4 shadow-sm h-100">
+                    <div class="card-body text-center p-4">
+                        <i class="fas fa-sync-alt fa-3x text-success mb-3"></i>
+                        <h5 class="card-title fw-bold">Easy Returns</h5>
+                        <p class="card-text text-muted">Not satisfied with your purchase? Return it within 7 days for a full refund or replacement.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 rounded-4 shadow-sm h-100">
+                    <div class="card-body text-center p-4">
+                        <i class="fas fa-shield-alt fa-3x text-warning mb-3"></i>
+                        <h5 class="card-title fw-bold">Extended Warranty</h5>
+                        <p class="card-text text-muted">All our TVs come with a standard 2-year warranty, with options to extend up to 5 years.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add hover effects for product cards -->
+<style>
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    }
+    
+    .product-card:hover .product-image img {
+        transform: scale(1.05);
+    }
+    
+    .product-card:hover .product-overlay {
+        opacity: 1 !important;
+    }
+</style>

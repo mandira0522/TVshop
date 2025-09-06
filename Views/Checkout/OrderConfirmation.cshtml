@@ -1,0 +1,154 @@
+@model TvShop.Models.Order
+@{
+    ViewData["Title"] = "Order Confirmation | TvShop";
+}
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-success text-white">
+                    <div class="d-flex align-items-center">
+                        <div class="rounded-circle bg-white text-success p-3 me-3">
+                            <i class="fas fa-check-circle fa-2x"></i>
+                        </div>
+                        <div>
+                            <h2 class="mb-0">Order Confirmed!</h2>
+                            <p class="mb-0">Thank you for shopping with TvShop</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-body p-4">
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card h-100 border-0 bg-light">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="fas fa-user me-2"></i>Customer Details</h5>
+                                    <hr>
+                                    <p class="mb-1"><strong>Name:</strong> @Model.CustomerName</p>
+                                    <p class="mb-1"><strong>Email:</strong> @Model.Email</p>
+                                    <p class="mb-1"><strong>Phone:</strong> @Model.PhoneNumber</p>
+                                    <p class="mb-0"><strong>Address:</strong> @Model.Address</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card h-100 border-0 bg-light">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="fas fa-shipping-fast me-2"></i>Order Information</h5>
+                                    <hr>
+                                    <p class="mb-1"><strong>Order ID:</strong> #@Model.Id</p>
+                                    <p class="mb-1"><strong>Order Date:</strong> @Model.OrderDate.ToString("MMM dd, yyyy HH:mm")</p>
+                                    <p class="mb-1"><strong>Payment Method:</strong> Credit Card</p>
+                                    <p class="mb-0"><strong>Order Status:</strong> <span class="badge bg-success">Confirmed</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h4 class="mb-3"><i class="fas fa-box-open me-2"></i>Order Items</h4>
+                    <div class="table-responsive mb-4">
+                        <table class="table table-striped">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Image</th>
+                                    <th class="text-end">Price</th>
+                                    <th class="text-center">Quantity</th>
+                                    <th class="text-end">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.OrderItems)
+                                {
+                                    <tr>
+                                        <td class="align-middle">@item.ProductName</td>
+                                        <td class="align-middle">
+                                            <img src="@item.MainImageUrl" alt="@item.ProductName" class="img-thumbnail" width="60" height="60" />
+                                        </td>
+                                        <td class="align-middle text-end">₹@item.Price.ToString("N2")</td>
+                                        <td class="align-middle text-center">@item.Quantity</td>
+                                        <td class="align-middle text-end">₹@((item.Price * item.Quantity).ToString("N2"))</td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot class="table-light">
+                                <tr>
+                                    <td colspan="4" class="text-end"><strong>Subtotal:</strong></td>
+                                    <td class="text-end">₹@Model.TotalAmount.ToString("N2")</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" class="text-end"><strong>Shipping:</strong></td>
+                                    <td class="text-end">₹0.00</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" class="text-end"><strong>Total:</strong></td>
+                                    <td class="text-end"><strong>₹@Model.TotalAmount.ToString("N2")</strong></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-info" role="alert">
+                                <i class="fas fa-info-circle me-2"></i> A confirmation email has been sent to <strong>@Model.Email</strong> with your order details.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="@Url.Action("Index", "Home")" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Continue Shopping
+                        </a>
+                        <a href="@Url.Action("ViewInvoice", "Order", new { id = Model.Id })" class="btn btn-primary">
+                            <i class="fas fa-file-invoice me-2"></i>View Invoice
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Confetti effect for order confirmation
+        $(document).ready(function() {
+            // Simple confetti animation
+            const confettiCount = 200;
+            const confettiColors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+            
+            for(let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.animationDelay = Math.random() * 5 + 's';
+                confetti.style.backgroundColor = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+                document.body.appendChild(confetti);
+                
+                // Remove confetti after animation
+                setTimeout(() => {
+                    confetti.remove();
+                }, 6000);
+            }
+        });
+    </script>
+    <style>
+        .confetti {
+            position: fixed;
+            top: -10px;
+            width: 10px;
+            height: 10px;
+            z-index: 1000;
+            animation: fall 5s linear forwards;
+        }
+        
+        @@keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(720deg);
+            }
+        }
+    </style>
+}

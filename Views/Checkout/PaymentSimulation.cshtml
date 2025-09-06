@@ -1,0 +1,123 @@
+@{
+    ViewData["Title"] = "Processing Payment | TvShop";
+    Layout = "_Layout";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0 rounded-lg">
+                <div class="card-body text-center p-5">
+                    <div class="mb-4">
+                        <div class="payment-animation">
+                            <div class="circle-animation"></div>
+                            <i class="fas fa-lock fa-3x text-primary animation-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <h2 class="mb-3"><i class="fas fa-exchange-alt me-2"></i>Processing Your Payment</h2>
+                    
+                    <div class="progress mb-4" style="height: 10px;">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" 
+                             role="progressbar" 
+                             style="width: 0%" 
+                             id="paymentProgress"></div>
+                    </div>
+                    
+                    <p class="lead mb-4">Your transaction is being processed securely. Please do not refresh this page.</p>
+                    
+                    <div class="d-flex justify-content-center mb-3">
+                        <div class="spinner-border text-primary me-2" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <div id="statusMessage" class="fs-5">Connecting to payment gateway...</div>
+                    </div>
+                    
+                    <div class="card bg-light mb-4">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-center">
+                                <i class="fab fa-cc-visa fa-2x me-2"></i>
+                                <i class="fab fa-cc-mastercard fa-2x me-2"></i>
+                                <i class="fab fa-cc-amex fa-2x me-2"></i>
+                                <i class="fab fa-cc-discover fa-2x"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-muted small">This is a simulation for demonstration purposes. No actual payment is being processed.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .payment-animation {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+        }
+        
+        .circle-animation {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #0d6efd;
+            border-radius: 50%;
+            animation: spin 2s linear infinite;
+        }
+        
+        .animation-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        @@keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            var messages = [
+                "Connecting to payment gateway...",
+                "Verifying card details...",
+                "Processing transaction...",
+                "Securing payment data...",
+                "Finalizing payment...",
+                "Payment successful! Redirecting..."
+            ];
+            
+            var progress = 0;
+            var messageIndex = 0;
+            var progressBar = $("#paymentProgress");
+            var statusMessage = $("#statusMessage");
+            
+            var progressInterval = setInterval(function() {
+                progress += 20;
+                progressBar.css("width", progress + "%");
+                
+                if (messageIndex < messages.length) {
+                    statusMessage.text(messages[messageIndex]);
+                    messageIndex++;
+                }
+                
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                    // Redirect to CompletePayment
+                    setTimeout(function() {
+                        window.location.href = '@Url.Action("CompletePayment", "Checkout", new { id = ViewContext.RouteData.Values["id"] })';
+                    }, 1000);
+                }
+            }, 1000);
+        });
+    </script>
+}

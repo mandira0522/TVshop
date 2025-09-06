@@ -1,0 +1,300 @@
+@model IEnumerable<TvShop.Models.Order>
+@using System.Globalization
+@using TvShop.Models
+
+<div class="container my-4">
+    <div class="row align-items-center mb-4">
+        <div class="col-md-6">
+            <h2><i class="fas fa-box-open me-2"></i>My Order History</h2>
+        </div>
+        <div class="col-md-6 text-md-end">
+            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-primary">
+                <i class="fas fa-shopping-bag me-1"></i> Continue Shopping
+            </a>
+        </div>
+    </div>
+    
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            <i class="fas fa-exclamation-triangle me-2"></i> @ViewBag.ErrorMessage
+        </div>
+    }
+
+    @if (ViewBag.Message != null)
+    {
+        <div class="alert alert-info" role="alert">
+            <i class="fas fa-info-circle me-2"></i> @ViewBag.Message
+        </div>
+    }
+    
+    <!-- Order Filter and Search -->
+    <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title"><i class="fas fa-filter me-2"></i>Filter Orders</h5>
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label for="statusFilter" class="form-label">Status</label>
+                    <select id="statusFilter" class="form-select">
+                        <option value="">All Statuses</option>
+                        <option value="@OrderStatus.Pending">Pending</option>
+                        <option value="@OrderStatus.Processing">Processing</option>
+                        <option value="@OrderStatus.Shipped">Shipped</option>
+                        <option value="@OrderStatus.Delivered">Delivered</option>
+                        <option value="@OrderStatus.Cancelled">Cancelled</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="dateFilter" class="form-label">Date Range</label>
+                    <select id="dateFilter" class="form-select">
+                        <option value="">All Time</option>
+                        <option value="7">Last 7 Days</option>
+                        <option value="30">Last 30 Days</option>
+                        <option value="90">Last 3 Months</option>
+                        <option value="365">Last Year</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="searchOrder" class="form-label">Search</label>
+                    <input type="text" id="searchOrder" class="form-control" placeholder="Search by order #, product...">
+                </div>
+            </div>
+        </div>
+    </div>
+
+@if (Model != null && Model.Any())
+{
+    <div class="order-cards">
+        <div class="row" id="orderItems">
+            @foreach (var order in Model)
+            {
+                <div class="col-lg-6 mb-4 order-item" data-order-id="@order.Id" data-order-date="@order.OrderDate.ToString("yyyy-MM-dd")" data-order-status="@order.Status">
+                    <div class="card h-100 shadow-sm order-card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">
+                                <i class="fas fa-shopping-bag me-2"></i> Order #@order.Id
+                            </h5>
+                            <span class="badge @GetStatusBadgeClass(order.Status)">
+                                @order.Status
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <p class="mb-1"><i class="far fa-calendar-alt me-2"></i> <strong>Order Date:</strong></p>
+                                    <p class="ms-4">@order.OrderDate.ToString("MMM dd, yyyy hh:mm tt")</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="mb-1"><i class="fas fa-money-bill-wave me-2"></i> <strong>Total:</strong></p>
+                                    <p class="ms-4 fw-bold text-success">₹@order.TotalAmount.ToString("N2")</p>
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <p class="mb-1"><i class="fas fa-truck me-2"></i> <strong>Shipping Details:</strong></p>
+                                    <div class="ms-4">
+                                        <p class="mb-1">@order.CustomerName</p>
+                                        <p class="mb-1">@order.Address</p>
+                                        <p class="mb-1">@order.Email</p>
+                                        <p class="mb-0">@(order.PhoneNumber ?? "No phone number provided")</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <p class="mb-1"><i class="fas fa-receipt me-2"></i> <strong>Payment:</strong></p>
+                                    <p class="ms-4">ID: @(string.IsNullOrEmpty(order.PaymentId) ? "Not paid" : order.PaymentId)</p>
+                                </div>
+                            </div>
+                            
+                            <div class="order-items-summary">
+                                <p class="mb-2"><i class="fas fa-box me-2"></i> <strong>Items (@(order.OrderItems != null ? order.OrderItems.Count : 0)):</strong></p>
+                                
+                                @if (order.OrderItems != null && order.OrderItems.Any())
+                                {
+                                    <div class="ms-4">
+                                        @foreach (var item in order.OrderItems.Take(2))
+                                        {
+                                            <div class="d-flex align-items-center mb-2">
+                                                <img src="@item.MainImageUrl" alt="@item.ProductName" class="img-thumbnail me-2" style="width: 50px; height: 50px; object-fit: cover;">
+                                                <div>
+                                                    <p class="mb-0 fw-semibold">@item.ProductName</p>
+                                                    <p class="mb-0 text-muted">₹@item.Price.ToString("N2") x @item.Quantity</p>
+                                                </div>
+                                            </div>
+                                        }
+                                        
+                                        @if (order.OrderItems.Count > 2)
+                                        {
+                                            <p class="text-muted">+ @(order.OrderItems.Count - 2) more items</p>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="alert alert-warning ms-4">
+                                        <small>No items found for this order.</small>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent d-flex justify-content-between">
+                            <a asp-action="ViewInvoice" asp-route-id="@order.Id" class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-file-invoice me-1"></i> Invoice
+                            </a>
+                            <a asp-action="TrackOrder" asp-route-id="@order.Id" class="btn btn-sm btn-primary">
+                                <i class="fas fa-truck me-1"></i> Track Order
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        
+        <!-- Pagination -->
+        <div class="d-flex justify-content-center mt-4 mb-5" id="pagination">
+            <nav aria-label="Order pagination">
+                <ul class="pagination">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-info shadow-sm">
+        <div class="d-flex align-items-center">
+            <div class="me-3">
+                <i class="fas fa-shopping-cart fa-3x text-primary"></i>
+            </div>
+            <div>
+                <h4 class="alert-heading mb-2">No Orders Found</h4>
+                <p class="mb-3">You haven't placed any orders yet. Browse our products and make your first purchase!</p>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-primary">
+                    <i class="fas fa-shopping-bag me-1"></i> Start Shopping
+                </a>
+            </div>
+        </div>
+    </div>
+}</div>
+
+@section Styles {
+    <style>
+        .order-card {
+            transition: transform 0.2s;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .order-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1)!important;
+        }
+        
+        .card-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid rgba(0,0,0,.125);
+        }
+        
+        .pagination .page-link {
+            color: #212529;
+        }
+        
+        .pagination .active .page-link {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            color: white;
+        }
+    </style>
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Filter functionality
+            function filterOrders() {
+                const statusFilter = $('#statusFilter').val();
+                const dateFilter = $('#dateFilter').val();
+                const searchText = $('#searchOrder').val().toLowerCase();
+                
+                $('.order-item').each(function() {
+                    const $item = $(this);
+                    const orderStatus = $item.data('order-status');
+                    const orderDate = new Date($item.data('order-date'));
+                    const orderId = $item.data('order-id').toString();
+                    const orderText = $item.text().toLowerCase();
+                    
+                    // Check status filter
+                    const statusMatch = !statusFilter || orderStatus === statusFilter;
+                    
+                    // Check date filter
+                    let dateMatch = true;
+                    if (dateFilter) {
+                        const days = parseInt(dateFilter);
+                        const cutoffDate = new Date();
+                        cutoffDate.setDate(cutoffDate.getDate() - days);
+                        dateMatch = orderDate >= cutoffDate;
+                    }
+                    
+                    // Check search filter
+                    const searchMatch = !searchText || 
+                                       orderText.includes(searchText) || 
+                                       orderId.includes(searchText);
+                    
+                    // Show/hide based on all filters
+                    if (statusMatch && dateMatch && searchMatch) {
+                        $item.show();
+                    } else {
+                        $item.hide();
+                    }
+                });
+                
+                // Update pagination based on visible items
+                updatePagination();
+            }
+            
+            function updatePagination() {
+                const visibleItems = $('.order-item:visible').length;
+                const hasItems = visibleItems > 0;
+                $('#pagination').toggle(hasItems);
+            }
+            
+            // Attach event handlers
+            $('#statusFilter, #dateFilter').on('change', filterOrders);
+            $('#searchOrder').on('keyup', filterOrders);
+            
+            // Initialize filters
+            filterOrders();
+        });
+    </script>
+}
+
+@functions {
+    private string GetStatusBadgeClass(OrderStatus status)
+    {
+        return status switch
+        {
+            OrderStatus.Pending => "bg-secondary",
+            OrderStatus.Processing => "bg-primary",
+            OrderStatus.Shipped => "bg-info",
+            OrderStatus.Delivered => "bg-success",
+            OrderStatus.Cancelled => "bg-danger",
+            _ => "bg-secondary"
+        };
+    }
+}

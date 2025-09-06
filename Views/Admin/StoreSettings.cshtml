@@ -1,0 +1,245 @@
+@model TvShop.ViewModels.StoreSettingsViewModel
+
+<div class="container my-4">
+    <!-- Header -->
+    <div class="row align-items-center mb-4">
+        <div class="col-md-6">
+            <h2><i class="fas fa-cog me-2"></i>Store Settings</h2>
+            <p class="text-muted">Configure your store settings and preferences</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+            <a href="@Url.Action("Index", "Admin")" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-1"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle me-2"></i> @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="card shadow">
+        <div class="card-header bg-white py-3">
+            <ul class="nav nav-tabs card-header-tabs" id="settingsTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="general-tab" data-bs-toggle="tab" data-bs-target="#general" 
+                            type="button" role="tab" aria-controls="general" aria-selected="true">
+                        <i class="fas fa-store me-1"></i> General
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" 
+                            type="button" role="tab" aria-controls="contact" aria-selected="false">
+                        <i class="fas fa-address-card me-1"></i> Contact
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="email-tab" data-bs-toggle="tab" data-bs-target="#email" 
+                            type="button" role="tab" aria-controls="email" aria-selected="false">
+                        <i class="fas fa-envelope me-1"></i> Email
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <form asp-action="StoreSettings" method="post">
+                <div class="tab-content" id="settingsTabContent">
+                    <!-- General Settings Tab -->
+                    <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
+                        <div class="row g-3">
+                            <div class="col-md-12 mb-3">
+                                <div class="form-floating">
+                                    <input asp-for="StoreName" class="form-control" placeholder="Store Name" />
+                                    <label asp-for="StoreName"></label>
+                                    <span asp-validation-for="StoreName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12 mb-3">
+                                <div class="form-floating">
+                                    <input asp-for="StoreTagline" class="form-control" placeholder="Store Tagline" />
+                                    <label asp-for="StoreTagline"></label>
+                                    <span asp-validation-for="StoreTagline" class="text-danger"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12 mb-3">
+                                <label asp-for="StoreAddress" class="form-label"></label>
+                                <textarea asp-for="StoreAddress" class="form-control" rows="3"></textarea>
+                                <span asp-validation-for="StoreAddress" class="text-danger"></span>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <div class="form-floating">
+                                    <select asp-for="DefaultCurrency" class="form-select">
+                                        <option value="INR">Indian Rupee (₹)</option>
+                                        <option value="USD">US Dollar ($)</option>
+                                        <option value="EUR">Euro (€)</option>
+                                        <option value="GBP">British Pound (£)</option>
+                                    </select>
+                                    <label asp-for="DefaultCurrency"></label>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <div class="form-check form-switch mt-4">
+                                    <input asp-for="OrderEmailNotifications" class="form-check-input" type="checkbox" />
+                                    <label asp-for="OrderEmailNotifications" class="form-check-label"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Contact Information Tab -->
+                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                        <div class="row g-3">
+                            <div class="col-md-6 mb-3">
+                                <div class="form-floating">
+                                    <input asp-for="ContactEmail" class="form-control" placeholder="Contact Email" />
+                                    <label asp-for="ContactEmail"></label>
+                                    <span asp-validation-for="ContactEmail" class="text-danger"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <div class="form-floating">
+                                    <input asp-for="ContactPhone" class="form-control" placeholder="Contact Phone" />
+                                    <label asp-for="ContactPhone"></label>
+                                    <span asp-validation-for="ContactPhone" class="text-danger"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12 mb-3">
+                                <h5 class="my-3">Social Media</h5>
+                            </div>
+                            
+                            <div class="col-md-4 mb-3">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fab fa-facebook"></i></span>
+                                    <div class="form-floating flex-grow-1">
+                                        <input asp-for="SocialFacebook" class="form-control" placeholder="Facebook URL" />
+                                        <label asp-for="SocialFacebook">Facebook URL</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4 mb-3">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fab fa-twitter"></i></span>
+                                    <div class="form-floating flex-grow-1">
+                                        <input asp-for="SocialTwitter" class="form-control" placeholder="Twitter URL" />
+                                        <label asp-for="SocialTwitter">Twitter URL</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4 mb-3">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fab fa-instagram"></i></span>
+                                    <div class="form-floating flex-grow-1">
+                                        <input asp-for="SocialInstagram" class="form-control" placeholder="Instagram URL" />
+                                        <label asp-for="SocialInstagram">Instagram URL</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Email Settings Tab -->
+                    <div class="tab-pane fade" id="email" role="tabpanel" aria-labelledby="email-tab">
+                        <div class="row g-3">
+                            <div class="col-md-12 mb-3">
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle me-2"></i> Configure your SMTP settings for sending emails
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <div class="form-floating">
+                                    <input asp-for="FromName" class="form-control" placeholder="Email From Name" />
+                                    <label asp-for="FromName"></label>
+                                    <span asp-validation-for="FromName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <div class="form-floating">
+                                    <input asp-for="FromAddress" class="form-control" placeholder="Email From Address" />
+                                    <label asp-for="FromAddress"></label>
+                                    <span asp-validation-for="FromAddress" class="text-danger"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-8 mb-3">
+                                <div class="form-floating">
+                                    <input asp-for="SmtpServer" class="form-control" placeholder="SMTP Server" />
+                                    <label asp-for="SmtpServer"></label>
+                                    <span asp-validation-for="SmtpServer" class="text-danger"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4 mb-3">
+                                <div class="form-floating">
+                                    <input asp-for="SmtpPort" class="form-control" placeholder="SMTP Port" />
+                                    <label asp-for="SmtpPort"></label>
+                                    <span asp-validation-for="SmtpPort" class="text-danger"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <div class="form-floating">
+                                    <input asp-for="SmtpUsername" class="form-control" placeholder="SMTP Username" />
+                                    <label asp-for="SmtpUsername"></label>
+                                    <span asp-validation-for="SmtpUsername" class="text-danger"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <div class="form-floating">
+                                    <input asp-for="SmtpPassword" class="form-control" placeholder="SMTP Password" />
+                                    <label asp-for="SmtpPassword"></label>
+                                    <span asp-validation-for="SmtpPassword" class="text-danger"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12 mt-2">
+                                <button type="button" id="testEmailBtn" class="btn btn-outline-info">
+                                    <i class="fas fa-paper-plane me-1"></i> Test Email Settings
+                                </button>
+                                <div id="testEmailResult" class="mt-2" style="display: none;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                    <button type="reset" class="btn btn-outline-secondary me-md-2">
+                        <i class="fas fa-undo me-1"></i> Reset Changes
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save me-1"></i> Save Settings
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // For demo purposes - not actually implemented
+        document.getElementById('testEmailBtn').addEventListener('click', function() {
+            const resultDiv = document.getElementById('testEmailResult');
+            resultDiv.innerHTML = '<div class="alert alert-success"><i class="fas fa-check-circle me-2"></i> Test email was sent successfully!</div>';
+            resultDiv.style.display = 'block';
+            
+            // In a real implementation, this would make an AJAX call to a controller method
+            // that would attempt to send a test email using the provided settings
+        });
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

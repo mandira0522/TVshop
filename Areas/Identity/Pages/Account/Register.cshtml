@@ -1,0 +1,199 @@
+@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "_Layout";
+}
+
+<link rel="stylesheet" href="~/css/auth.css" asp-append-version="true" />
+
+<div class="auth-body">
+    <div class="auth-container auth-container-compact">
+        <div class="auth-logo-container-small">
+            <img src="~/uploads/logo/profile.png" alt="Profile" class="auth-logo-small auth-logo-animated">
+        </div>
+        <h2 class="auth-title-compact">Create Account</h2>
+        <p class="auth-subtitle-compact">Join our community today</p>
+
+        <form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="auth-form-animated">
+            <div asp-validation-summary="ModelOnly" class="auth-validation-summary"></div>
+
+            <div class="auth-form-row">
+                <div class="auth-form-group">
+                    <label asp-for="Input.FirstName" class="auth-label-compact">First Name</label>
+                    <div class="auth-input-container">
+                        <i class="fas fa-user auth-input-icon"></i>
+                        <input asp-for="Input.FirstName" class="auth-input auth-input-with-icon auth-input-compact" placeholder="First Name" required autocomplete="given-name" />
+                        <span class="auth-input-focus-effect"></span>
+                    </div>
+                    <span asp-validation-for="Input.FirstName" class="auth-validation"></span>
+                </div>
+
+                <div class="auth-form-group">
+                    <label asp-for="Input.LastName" class="auth-label-compact">Last Name</label>
+                    <div class="auth-input-container">
+                        <i class="fas fa-user auth-input-icon"></i>
+                        <input asp-for="Input.LastName" class="auth-input auth-input-with-icon auth-input-compact" placeholder="Last Name" required autocomplete="family-name" />
+                        <span class="auth-input-focus-effect"></span>
+                    </div>
+                    <span asp-validation-for="Input.LastName" class="auth-validation"></span>
+                </div>
+            </div>
+
+            <div class="auth-form-group">
+                <label asp-for="Input.Email" class="auth-label-compact">Email Address</label>
+                <div class="auth-input-container">
+                    <i class="fas fa-envelope auth-input-icon"></i>
+                    <input asp-for="Input.Email" class="auth-input auth-input-with-icon auth-input-compact" placeholder="Email Address" required autocomplete="email" />
+                    <span class="auth-input-focus-effect"></span>
+                </div>
+                <span asp-validation-for="Input.Email" class="auth-validation"></span>
+            </div>
+
+            <div class="auth-form-group">
+                <label asp-for="Input.Password" class="auth-label-compact">Password</label>
+                <div class="auth-input-container">
+                    <i class="fas fa-lock auth-input-icon"></i>
+                    <input asp-for="Input.Password" id="password" class="auth-input auth-input-with-icon auth-input-compact" placeholder="Password" required autocomplete="new-password" />
+                    <button type="button" class="password-toggle" id="togglePassword">
+                        <i class="far fa-eye"></i>
+                    </button>
+                    <span class="auth-input-focus-effect"></span>
+                </div>
+                <div class="compact-password-strength">
+                    <div class="password-strength-meter">
+                        <div class="password-strength-progress" id="passwordStrength"></div>
+                    </div>
+                    <small class="password-feedback" id="passwordFeedback">Password strength</small>
+                </div>
+                <span asp-validation-for="Input.Password" class="auth-validation"></span>
+            </div>
+
+            <div class="auth-form-group">
+                <label asp-for="Input.ConfirmPassword" class="auth-label-compact">Confirm Password</label>
+                <div class="auth-input-container">
+                    <i class="fas fa-lock auth-input-icon"></i>
+                    <input asp-for="Input.ConfirmPassword" id="confirmPassword" class="auth-input auth-input-with-icon auth-input-compact" placeholder="Confirm Password" required autocomplete="new-password" />
+                    <button type="button" class="password-toggle" id="toggleConfirmPassword">
+                        <i class="far fa-eye"></i>
+                    </button>
+                    <span class="auth-input-focus-effect"></span>
+                </div>
+                <span asp-validation-for="Input.ConfirmPassword" class="auth-validation"></span>
+            </div>
+
+            <button type="submit" class="auth-btn auth-btn-animated auth-btn-compact">
+                <span class="auth-btn-content">
+                    <i class="fas fa-user-plus me-2"></i>Create Account
+                </span>
+            </button>
+            
+            <div class="auth-footer-compact">
+                <a href="/Identity/Account/Login" class="auth-link">
+                    Already have an account? <i class="fas fa-arrow-right ms-1"></i>
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        // Toggle password visibility
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+        
+        document.getElementById('toggleConfirmPassword').addEventListener('click', function () {
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            const icon = this.querySelector('i');
+            
+            if (confirmPasswordInput.type === 'password') {
+                confirmPasswordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                confirmPasswordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+        
+        // Password strength meter
+        document.getElementById('password').addEventListener('input', function() {
+            const password = this.value;
+            const strengthMeter = document.getElementById('passwordStrength');
+            const feedbackElement = document.getElementById('passwordFeedback');
+            
+            // Calculate password strength
+            let strength = 0;
+            let feedback = '';
+            
+            if (password.length >= 8) {
+                strength += 25;
+            }
+            
+            if (password.match(/[A-Z]/)) {
+                strength += 25;
+            }
+            
+            if (password.match(/[0-9]/)) {
+                strength += 25;
+            }
+            
+            if (password.match(/[^A-Za-z0-9]/)) {
+                strength += 25;
+            }
+            
+            // Update strength meter
+            strengthMeter.style.width = strength + '%';
+            
+            // Update color based on strength
+            if (strength < 25) {
+                strengthMeter.style.backgroundColor = '#ff4d4d';
+                feedback = 'Very weak';
+            } else if (strength < 50) {
+                strengthMeter.style.backgroundColor = '#ffa64d';
+                feedback = 'Weak';
+            } else if (strength < 75) {
+                strengthMeter.style.backgroundColor = '#ffff4d';
+                feedback = 'Moderate';
+            } else {
+                strengthMeter.style.backgroundColor = '#4dff4d';
+                feedback = 'Strong';
+            }
+            
+            feedbackElement.textContent = feedback;
+        });
+        
+        // Add input focus effects
+        document.querySelectorAll('.auth-input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.classList.add('input-focused');
+            });
+            
+            input.addEventListener('blur', function() {
+                if (!this.value) {
+                    this.parentElement.classList.remove('input-focused');
+                }
+            });
+            
+            // Set initial state if input has value
+            if (input.value) {
+                input.parentElement.classList.add('input-focused');
+            }
+        });
+    </script>
+}

@@ -1,0 +1,234 @@
+@model TvShop.Models.Product
+
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">Edit Product</h2>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                        <input asp-for="Id" type="hidden" />
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="Name" class="form-label">Name</label>
+                                    <input asp-for="Name" class="form-control" />
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="Brand" class="form-label">Brand</label>
+                                    <input asp-for="Brand" class="form-control" />
+                                    <span asp-validation-for="Brand" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="Price" class="form-label">Price (₹)</label>
+                                    <input asp-for="Price" type="number" step="0.01" class="form-control" id="productPrice" />
+                                    <span asp-validation-for="Price" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="DiscountPercentage" class="form-label">Discount (%)</label>
+                                    <input asp-for="DiscountPercentage" type="number" step="0.1" min="0" max="100" class="form-control" id="discountPercentage" onchange="calculateDiscountedPrice()" />
+                                    <span asp-validation-for="DiscountPercentage" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label">Final Price (₹)</label>
+                                    <input type="text" id="finalPrice" class="form-control bg-light" readonly />
+                                    <small class="text-muted">Price after discount</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="Category" class="form-label">Category</label>
+                                    <input asp-for="Category" class="form-control" />
+                                    <span asp-validation-for="Category" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="StockQuantity" class="form-label">Stock Quantity</label>
+                                    <input asp-for="StockQuantity" type="number" min="0" class="form-control" />
+                                    <span asp-validation-for="StockQuantity" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="Size" class="form-label">Size</label>
+                                    <input asp-for="Size" class="form-control" />
+                                    <span asp-validation-for="Size" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="Resolution" class="form-label">Resolution</label>
+                                    <input asp-for="Resolution" class="form-control" />
+                                    <span asp-validation-for="Resolution" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label asp-for="Description" class="form-label">Description</label>
+                            <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="MainImageUrl" class="form-label">Main Image URL</label>
+                                    <input asp-for="MainImageUrl" class="form-control" />
+                                    <span asp-validation-for="MainImageUrl" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check mt-4">
+                                    <input asp-for="IsNewArrival" class="form-check-input" type="checkbox" />
+                                    <label asp-for="IsNewArrival" class="form-check-label">Mark as New Arrival</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label class="form-label">Product Images</label>
+                            <div id="productImagesContainer" class="row">
+                                @if (Model.ProductImages != null && Model.ProductImages.Any())
+                                {
+                                    @foreach (var image in Model.ProductImages)
+                                    {
+                                        <div class="col-md-3 mb-2">
+                                            <div class="card h-100">
+                                                <img src="@image.OtherImageUrl" class="card-img-top img-thumbnail" style="height: 120px; object-fit: contain;" alt="Product Image">
+                                                <div class="card-body p-2">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <input type="hidden" name="ExistingImageIds" value="@image.Id" />
+                                                        <button type="button" class="btn btn-sm btn-outline-danger removeImage" data-image-id="@image.Id">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                            
+                            <div id="newImageFields" class="mt-2">
+                                <div class="input-group mb-2">
+                                    <input type="text" name="NewImageUrls" class="form-control" placeholder="Enter path starting with /uploads/ (e.g., /uploads/image.jpg)" />
+                                    <button type="button" class="btn btn-outline-danger removeImageField">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <button type="button" id="addImageField" class="btn btn-sm btn-outline-secondary mt-2">
+                                <i class="fas fa-plus me-1"></i> Add More Images
+                            </button>
+                        </div>
+                        
+                        <div class="form-group d-flex justify-content-between mt-4">
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left me-1"></i> Back to List
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-1"></i> Update Product
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        // Calculate and display the final price after discount
+        function calculateDiscountedPrice() {
+            const price = parseFloat(document.getElementById('productPrice').value) || 0;
+            const discountPercentage = parseFloat(document.getElementById('discountPercentage').value) || 0;
+            
+            if (price > 0 && discountPercentage > 0) {
+                const discount = (discountPercentage / 100) * price;
+                const finalPrice = price - discount;
+                document.getElementById('finalPrice').value = '₹' + finalPrice.toFixed(2);
+            } else {
+                document.getElementById('finalPrice').value = '₹' + price.toFixed(2);
+            }
+        }
+        
+        // Initialize final price calculation
+        document.addEventListener('DOMContentLoaded', function() {
+            calculateDiscountedPrice();
+            
+            // Recalculate when price changes
+            document.getElementById('productPrice').addEventListener('input', calculateDiscountedPrice);
+        });
+        
+        // Image handling functionality
+        document.getElementById('addImageField').addEventListener('click', function() {
+            const container = document.getElementById('newImageFields');
+            const newField = document.createElement('div');
+            newField.className = 'input-group mb-2';
+            newField.innerHTML = `
+                <input type="text" name="NewImageUrls" class="form-control" placeholder="Enter path starting with /uploads/ (e.g., /uploads/image.jpg)" />
+                <button type="button" class="btn btn-outline-danger removeImageField">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            container.appendChild(newField);
+            
+            // Add event listener to the new remove button
+            newField.querySelector('.removeImageField').addEventListener('click', function() {
+                container.removeChild(newField);
+            });
+        });
+        
+        // Add event listeners to existing remove buttons
+        document.querySelectorAll('.removeImageField').forEach(button => {
+            button.addEventListener('click', function() {
+                this.closest('.input-group').remove();
+            });
+        });
+        
+        // Handle removing existing images
+        document.querySelectorAll('.removeImage').forEach(button => {
+            button.addEventListener('click', function() {
+                const imageId = this.getAttribute('data-image-id');
+                const card = this.closest('.col-md-3');
+                
+                // Create a hidden input to mark this image for deletion
+                const deleteInput = document.createElement('input');
+                deleteInput.type = 'hidden';
+                deleteInput.name = 'DeleteImageIds';
+                deleteInput.value = imageId;
+                document.querySelector('form').appendChild(deleteInput);
+                
+                // Remove the image card from display
+                card.remove();
+            });
+        });
+    </script>
+}

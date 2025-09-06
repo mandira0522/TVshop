@@ -1,0 +1,309 @@
+@model List<TvShop.Models.Product>
+@{
+    ViewData["Title"] = "Home";
+}
+
+<!-- Modern Hero Section with Animated Overlay -->
+<section class="hero-section position-relative text-white" style="height: 85vh; overflow: hidden; background: url('/uploads/logo/logoat hone.jpeg') center/cover no-repeat;">
+    <div class="slideshow-container">
+        <div class="slideshow">
+            <img src="/images/tv1.jpg" class="slide active" alt="TV 1">
+            <img src="/images/tv2.jpg" class="slide" alt="TV 2">
+            <img src="/images/tv3.jpg" class="slide" alt="TV 3">
+        </div>
+        <div class="overlay-gradient" style="background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%); position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;"></div>
+        <div class="container h-100 d-flex flex-column justify-content-center" style="position: relative; z-index: 2;">
+            <div class="row align-items-center h-100">
+                <div class="col-md-8 mx-auto hero-content animate__animated animate__fadeInLeft">
+                    <h1 class="fw-bold display-3 mb-3" style="font-family: 'Poppins', sans-serif;">Experience <span class="text-warning">Cinematic</span> Quality</h1>
+                    <p class="fs-4 mb-4 opacity-75">Discover our premium selection of cutting-edge televisions</p>
+                    <div class="d-flex gap-3 mt-2">
+                        <a asp-controller="Products" asp-action="Index" class="btn btn-lg btn-warning shadow-lg px-4 py-3 fw-bold">Shop Now</a>
+                        <a href="#featured" class="btn btn-lg btn-outline-light px-4 py-3">View Featured</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Add animation to make the search container visible on smaller screens -->
+<section class="d-md-none py-4 animate__animated animate__fadeInUp">
+    <div class="container">
+        <div class="search-container bg-white p-4 rounded-3 shadow-lg">
+            <h4 class="text-dark mb-3">Find Your Perfect TV</h4>
+            <form asp-controller="Home" asp-action="Index" method="get">
+                <div class="mb-3">
+                    <input class="form-control form-control-lg" type="search" name="search" placeholder="Search by model, brand, or features...">
+                </div>
+                <button class="btn btn-primary btn-lg w-100" type="submit">
+                    <i class="fas fa-search me-2"></i>Search
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    
+    function showSlide(index) {
+        slides.forEach((slide, i) => {
+            slide.classList.toggle('active', i === index);
+        });
+    }
+
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    showSlide(currentSlide);
+    setInterval(nextSlide, 5000); // Increased time for each slide
+</script>
+
+<!-- Modern Categories Section -->
+<section class="py-5 my-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md-6">
+                <h2 class="display-6 fw-bold" style="font-family: 'Poppins', sans-serif;">Premium <span class="text-primary">Brands</span></h2>
+                <div class="title-underline bg-warning mb-4" style="width: 80px; height: 4px;"></div>
+                <p class="lead text-muted">Experience excellence with our selection of world-class television brands</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            @foreach (var brand in new[] { "Sony", "Samsung", "LG", "TCL", "Panasonic" })
+            {
+                <div class="col-6 col-md-4 col-lg-2-4">
+                    <div class="brand-card position-relative overflow-hidden rounded-4 shadow-sm transition-all" style="cursor: pointer; transition: all 0.3s ease;">
+                        @{
+                            var logoPath = brand switch
+                            {
+                                "Sony" => "/uploads/logo/SONY.jpg.webp",
+                                "Samsung" => "/uploads/logo/Samsung-Logo.jpg",
+                                "LG" => "/uploads/logo/LG_logo.jpg.png",
+                                "TCL" => "/uploads/logo/TCL logo.jpg",
+                                "Panasonic" => "/uploads/logo/Panasonic_Logo.jpg.png",
+                                _ => ""
+                            };
+                        }
+                        <a asp-controller="Products" asp-action="Index" asp-route-brand="@brand" class="text-decoration-none">
+                            <div class="brand-image-container" style="height: 180px; overflow: hidden;">
+                                <img src="@logoPath" class="img-fluid w-100 h-100" alt="@brand" style="object-fit: cover; transition: transform 0.5s ease;">
+                                <div class="overlay position-absolute top-0 left-0 w-100 h-100 d-flex justify-content-center align-items-center" style="background: rgba(0,0,0,0.7); opacity: 0; transition: opacity 0.3s ease;">
+                                    <span class="btn btn-sm btn-light rounded-pill px-3">View Products</span>
+                                </div>
+                            </div>
+                            <div class="p-3 text-center">
+                                <h5 class="m-0 fw-bold">@brand</h5>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card text-center p-4">
+                    <div class="feature-icon mb-3 mx-auto rounded-circle bg-primary d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                        <i class="fas fa-truck-moving text-white fa-2x"></i>
+                    </div>
+                    <h4 class="fw-bold">Free Shipping</h4>
+                    <p class="text-muted">On orders over ₹20,000</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card text-center p-4">
+                    <div class="feature-icon mb-3 mx-auto rounded-circle bg-success d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                        <i class="fas fa-shield-alt text-white fa-2x"></i>
+                    </div>
+                    <h4 class="fw-bold">2 Year Warranty</h4>
+                    <p class="text-muted">Extended protection on all TVs</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card text-center p-4">
+                    <div class="feature-icon mb-3 mx-auto rounded-circle bg-warning d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                        <i class="fas fa-headset text-white fa-2x"></i>
+                    </div>
+                    <h4 class="fw-bold">24/7 Support</h4>
+                    <p class="text-muted">Dedicated customer service</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@if (Model != null && Model.Any())
+{
+    <!-- Featured Products Section with Modern Design -->
+    <section id="featured" class="py-5 my-5">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-md-6">
+                    <h2 class="display-6 fw-bold" style="font-family: 'Poppins', sans-serif;">Featured <span class="text-primary">TVs</span></h2>
+                    <div class="title-underline bg-warning mb-4" style="width: 80px; height: 4px;"></div>
+                    <p class="lead text-muted">Our selection of premium televisions for the ultimate viewing experience</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a asp-controller="Products" asp-action="Index" class="btn btn-outline-primary rounded-pill px-4">View All Products</a>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                @foreach (var product in Model.Take(4))
+                {
+                    <div class="col-md-6 col-lg-3 mb-4">
+                        <div class="product-card h-100 rounded-4 shadow-sm overflow-hidden" style="transition: all 0.3s ease;">
+                            <div class="product-image position-relative">
+                                <img src="@product.MainImageUrl" class="card-img-top" alt="@product.Name" style="height: 250px; object-fit: cover; transition: transform 0.5s ease;">
+                                <div class="product-overlay position-absolute top-0 end-0 p-3">
+                                    <span class="badge bg-danger rounded-pill px-3 py-2 mb-2 d-inline-block">Featured</span>
+                                </div>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-light text-dark px-3 py-2">@product.Brand</span>
+                                    <span class="price-tag fw-bold text-primary">₹@product.Price.ToString("N2")</span>
+                                </div>
+                                <h5 class="product-title fw-bold mb-3">@product.Name</h5>
+                                <div class="product-actions d-flex gap-2">
+                                    <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id" class="btn btn-primary flex-grow-1">View Details</a>
+                                    <form method="post" asp-controller="Cart" asp-action="AddToCart" class="flex-shrink-0">
+                                        <input type="hidden" name="productId" value="@product.Id" />
+                                        <button type="submit" class="btn btn-outline-dark" data-bs-toggle="tooltip" title="Add to Cart">
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- Top Deals Row -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="deals-banner rounded-4 p-5 text-white position-relative overflow-hidden" style="background: linear-gradient(135deg, #3a47d5 0%, #00d2ff 100%);">
+                        <div class="position-absolute top-0 end-0 d-none d-md-block" style="opacity: 0.2;">
+                            <i class="fas fa-tv fa-10x"></i>
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="col-lg-7">
+                                <h2 class="display-5 fw-bold mb-3">Special Offer</h2>
+                                <p class="lead mb-4">Get up to 25% off on selected premium TVs this week only!</p>
+                                <a asp-controller="Products" asp-action="Index" class="btn btn-light btn-lg px-4 shadow-sm">View Deals</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Second Row of Products -->
+            <div class="row g-4 mt-5">
+                @foreach (var product in Model.Skip(4).Take(4))
+                {
+                    <div class="col-md-6 col-lg-3 mb-4">
+                        <div class="product-card h-100 rounded-4 shadow-sm overflow-hidden" style="transition: all 0.3s ease;">
+                            <div class="product-image position-relative">
+                                <img src="@product.MainImageUrl" class="card-img-top" alt="@product.Name" style="height: 250px; object-fit: cover; transition: transform 0.5s ease;">
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-light text-dark px-3 py-2">@product.Brand</span>
+                                    <span class="price-tag fw-bold text-primary">₹@product.Price.ToString("N2")</span>
+                                </div>
+                                <h5 class="product-title fw-bold mb-3">@product.Name</h5>
+                                <div class="product-actions d-flex gap-2">
+                                    <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id" class="btn btn-primary flex-grow-1">View Details</a>
+                                    <form method="post" asp-controller="Cart" asp-action="AddToCart" class="flex-shrink-0">
+                                        <input type="hidden" name="productId" value="@product.Id" />
+                                        <button type="submit" class="btn btn-outline-dark" data-bs-toggle="tooltip" title="Add to Cart">
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}
+
+<!-- Modern Footer Section -->
+<footer class="pt-5 pb-4 bg-dark text-white">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Company Info -->
+            <div class="col-lg-4">
+                <h3 class="h5 fw-bold mb-3">TvShop</h3>
+                <p class="text-muted mb-3">Your one-stop destination for premium television technology, providing excellent service since 2020.</p>
+                <div class="social-icons d-flex gap-3 mb-3">
+                    <a href="#" class="text-white"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-lg-2 col-md-4">
+                <h3 class="h5 fw-bold mb-3">Shop</h3>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a asp-controller="Products" asp-action="Index" class="text-muted text-decoration-none">All Products</a></li>
+                    <li class="mb-2"><a asp-controller="Products" asp-action="Index" asp-route-brand="Sony" class="text-muted text-decoration-none">Sony</a></li>
+                    <li class="mb-2"><a asp-controller="Products" asp-action="Index" asp-route-brand="Samsung" class="text-muted text-decoration-none">Samsung</a></li>
+                    <li class="mb-2"><a asp-controller="Products" asp-action="Index" asp-route-brand="LG" class="text-muted text-decoration-none">LG</a></li>
+                </ul>
+            </div>
+
+            <!-- Support -->
+            <div class="col-lg-2 col-md-4">
+                <h3 class="h5 fw-bold mb-3">Support</h3>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="#" class="text-muted text-decoration-none">FAQ</a></li>
+                    <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Shipping</a></li>
+                    <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Returns</a></li>
+                    <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact -->
+            <div class="col-lg-4 col-md-4">
+                <h3 class="h5 fw-bold mb-3">Contact</h3>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><i class="fas fa-map-marker-alt me-2 text-primary"></i> 123 Tech Street, Mumbai, India</li>
+                    <li class="mb-2"><i class="fas fa-phone me-2 text-primary"></i> +91 1234567890</li>
+                    <li class="mb-2"><i class="fas fa-envelope me-2 text-primary"></i> support@tvshop.com</li>
+                </ul>
+            </div>
+        </div>
+
+        <hr class="my-4 bg-secondary">
+
+        <!-- Copyright -->
+        <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start">
+                <p class="mb-0">&copy; 2025 TvShop. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
+                <div class="d-flex justify-content-md-end justify-content-center">
+                    <img src="/uploads/payment/visa.png" alt="Visa" class="payment-icon me-2" style="height: 24px;">
+                    <img src="/uploads/payment/mastercard.png" alt="Mastercard" class="payment-icon me-2" style="height: 24px;">
+                    <img src="/uploads/payment/paypal.png" alt="PayPal" class="payment-icon me-2" style="height: 24px;">
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

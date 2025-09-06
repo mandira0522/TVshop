@@ -1,0 +1,102 @@
+@page
+@model ConfirmEmailModel
+@{
+    ViewData["Title"] = "Confirm Email";
+    Layout = "_Layout";
+}
+
+<link rel="stylesheet" href="~/css/auth.css" asp-append-version="true" />
+
+<div class="auth-body">
+    <div class="auth-container">
+        <img src="/images/logo.svg" alt="TvShop Logo" width="80" class="auth-logo">
+        <h2 class="auth-title">Email Confirmation</h2>
+        
+        @if (Model.StatusMessage != null)
+        {
+            @if (Model.StatusMessage.Contains("confirmed"))
+            {
+                <div class="auth-alert auth-alert-success text-center">
+                    <i class="fas fa-check-circle fa-3x mb-3"></i>
+                    <h4>Email Confirmed Successfully!</h4>
+                    <p>Thank you for confirming your email address. Your account is now active.</p>
+                </div>
+                
+                <div class="auth-animation">
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                </div>
+                
+                <a href="/Identity/Account/Login" class="auth-btn mt-4">
+                    <i class="fas fa-sign-in-alt me-2"></i>Go to Login
+                </a>
+            }
+            else
+            {
+                <div class="auth-alert auth-alert-danger text-center">
+                    <i class="fas fa-exclamation-triangle fa-3x mb-3"></i>
+                    <h4>Error Confirming Email</h4>
+                    <p>@Model.StatusMessage</p>
+                </div>
+                
+                <div class="mt-4">
+                    <a href="/Identity/Account/Login" class="auth-link">
+                        <i class="fas fa-arrow-left me-1"></i> Back to Login
+                    </a>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="auth-alert auth-alert-warning text-center">
+                <i class="fas fa-exclamation-triangle fa-3x mb-3"></i>
+                <h4>Unknown Status</h4>
+                <p>We couldn't determine the status of your email confirmation. Please try again or contact support.</p>
+            </div>
+            
+            <div class="mt-4">
+                <a href="/Identity/Account/Login" class="auth-link">
+                    <i class="fas fa-arrow-left me-1"></i> Back to Login
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @if (Model.StatusMessage != null && Model.StatusMessage.Contains("confirmed"))
+    {
+        <script>
+            // Create confetti animation
+            document.addEventListener('DOMContentLoaded', function() {
+                const confetti = document.querySelectorAll('.confetti');
+                
+                confetti.forEach((el, i) => {
+                    // Random colors
+                    const colors = ['#FF6B6B', '#4ECDC4', '#FFE66D', '#6B5B95', '#88D8B0'];
+                    el.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    // Random position
+                    el.style.left = Math.random() * 100 + 'vw';
+                    
+                    // Random delay
+                    el.style.animationDelay = Math.random() * 2 + 's';
+                    
+                    // Random duration
+                    el.style.animationDuration = Math.random() * 3 + 2 + 's';
+                    
+                    // Random rotation
+                    el.style.transform = 'rotate(' + Math.random() * 360 + 'deg)';
+                });
+            });
+        </script>
+    }
+}

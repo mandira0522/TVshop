@@ -1,0 +1,341 @@
+{
+  "Files": [
+    {
+      "Id": "/Users/sanket/Documents/TvShop/obj/Debug/net8.0/scopedcss/projectbundle/TvShop.bundle.scp.css",
+      "PackagePath": "staticwebassets/TvShop.bundle.scp.css"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/css/Products.css",
+      "PackagePath": "staticwebassets/css/Products.css"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/css/auth.css",
+      "PackagePath": "staticwebassets/css/auth.css"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/css/site.css",
+      "PackagePath": "staticwebassets/css/site.css"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/favicon.ico",
+      "PackagePath": "staticwebassets/favicon.ico"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/images/default-avatar.svg",
+      "PackagePath": "staticwebassets/images/default-avatar.svg"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/images/placeholder.jpg",
+      "PackagePath": "staticwebassets/images/placeholder.jpg"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/js/site.js",
+      "PackagePath": "staticwebassets/js/site.js"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/LICENSE",
+      "PackagePath": "staticwebassets/lib/bootstrap"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap-grid.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap-grid.css"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap-grid.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap-grid.css.map"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap-grid.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap-grid.min.css"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap-grid.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap-grid.min.css.map"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap-grid.rtl.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap-grid.rtl.css"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap-grid.rtl.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap-grid.rtl.css.map"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap-grid.rtl.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap-grid.rtl.min.css"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap-grid.rtl.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap-grid.rtl.min.css.map"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap-reboot.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap-reboot.css"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap-reboot.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap-reboot.css.map"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap-reboot.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap-reboot.min.css"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap-reboot.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap-reboot.min.css.map"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap-reboot.rtl.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap-reboot.rtl.css"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap-reboot.rtl.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap-reboot.rtl.css.map"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap-reboot.rtl.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap-reboot.rtl.min.css"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap-reboot.rtl.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap-reboot.rtl.min.css.map"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap-utilities.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap-utilities.css"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap-utilities.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap-utilities.css.map"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap-utilities.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap-utilities.min.css"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap-utilities.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap-utilities.min.css.map"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap-utilities.rtl.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap-utilities.rtl.css"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap-utilities.rtl.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap-utilities.rtl.css.map"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap-utilities.rtl.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap-utilities.rtl.min.css"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap-utilities.rtl.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap-utilities.rtl.min.css.map"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap.css"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap.css.map"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap.min.css"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap.min.css.map"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap.rtl.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap.rtl.css"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap.rtl.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap.rtl.css.map"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap.rtl.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap.rtl.min.css"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/css/bootstrap.rtl.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/css/bootstrap.rtl.min.css.map"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/js/bootstrap.bundle.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/js/bootstrap.bundle.js"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/js/bootstrap.bundle.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/js/bootstrap.bundle.js.map"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/js/bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/js/bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/js/bootstrap.bundle.min.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/js/bootstrap.bundle.min.js.map"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/js/bootstrap.esm.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/js/bootstrap.esm.js"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/js/bootstrap.esm.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/js/bootstrap.esm.js.map"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/js/bootstrap.esm.min.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/js/bootstrap.esm.min.js"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/js/bootstrap.esm.min.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/js/bootstrap.esm.min.js.map"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/js/bootstrap.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/js/bootstrap.js"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/js/bootstrap.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/js/bootstrap.js.map"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/js/bootstrap.min.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/js/bootstrap.min.js"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/bootstrap/js/bootstrap.min.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/js/bootstrap.min.js.map"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/jquery-validation-unobtrusive/LICENSE.txt",
+      "PackagePath": "staticwebassets/lib/jquery-validation-unobtrusive/LICENSE.txt"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/jquery-validation/LICENSE.md",
+      "PackagePath": "staticwebassets/lib/jquery-validation/LICENSE.md"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/jquery-validation/dist/additional-methods.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation/dist/additional-methods.js"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/jquery-validation/dist/additional-methods.min.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation/dist/additional-methods.min.js"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/jquery-validation/dist/jquery.validate.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation/dist/jquery.validate.js"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/jquery-validation/dist/jquery.validate.min.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation/dist/jquery.validate.min.js"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/jquery/LICENSE.txt",
+      "PackagePath": "staticwebassets/lib/jquery/LICENSE.txt"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/jquery/jquery.js",
+      "PackagePath": "staticwebassets/lib/jquery/jquery.js"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/jquery/jquery.min.js",
+      "PackagePath": "staticwebassets/lib/jquery/jquery.min.js"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/jquery/jquery.min.map",
+      "PackagePath": "staticwebassets/lib/jquery/jquery.min.map"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/jquery/jquery.slim.js",
+      "PackagePath": "staticwebassets/lib/jquery/jquery.slim.js"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/jquery/jquery.slim.min.js",
+      "PackagePath": "staticwebassets/lib/jquery/jquery.slim.min.js"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/lib/jquery/jquery.slim.min.map",
+      "PackagePath": "staticwebassets/lib/jquery/jquery.slim.min.map"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/uploads/logo/LG_logo.jpg.png",
+      "PackagePath": "staticwebassets/uploads/logo/LG_logo.jpg.png"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/uploads/logo/Panasonic_Logo.jpg.png",
+      "PackagePath": "staticwebassets/uploads/logo/Panasonic_Logo.jpg.png"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/uploads/logo/SONY.jpg.webp",
+      "PackagePath": "staticwebassets/uploads/logo/SONY.jpg.webp"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/uploads/logo/Samsung-Logo.jpg",
+      "PackagePath": "staticwebassets/uploads/logo/Samsung-Logo.jpg"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/uploads/logo/TCL logo.jpg",
+      "PackagePath": "staticwebassets/uploads/logo/TCL logo.jpg"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/uploads/logo/logoat hone.jpeg",
+      "PackagePath": "staticwebassets/uploads/logo/logoat hone.jpeg"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/uploads/logo/profile.png",
+      "PackagePath": "staticwebassets/uploads/logo/profile.png"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/uploads/sony1.1.png.webp",
+      "PackagePath": "staticwebassets/uploads/sony1.1.png.webp"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/uploads/sony1.2.png.webp",
+      "PackagePath": "staticwebassets/uploads/sony1.2.png.webp"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/uploads/sony1.3.png.webp",
+      "PackagePath": "staticwebassets/uploads/sony1.3.png.webp"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/uploads/sony1.4.png.webp",
+      "PackagePath": "staticwebassets/uploads/sony1.4.png.webp"
+    },
+    {
+      "Id": "/Users/sanket/Documents/TvShop/wwwroot/uploads/sony1.5.png.webp",
+      "PackagePath": "staticwebassets/uploads/sony1.5.png.webp"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.TvShop.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.build.TvShop.props",
+      "PackagePath": "build\\TvShop.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.TvShop.props",
+      "PackagePath": "buildMultiTargeting\\TvShop.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.TvShop.props",
+      "PackagePath": "buildTransitive\\TvShop.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

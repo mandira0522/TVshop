@@ -1,0 +1,131 @@
+@model TvShop.Models.Invoice
+
+@{
+    ViewData["Title"] = "Invoice #" + Model.InvoiceNumber;
+}
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="mb-0"><i class="fas fa-file-invoice me-2"></i>Invoice</h2>
+                <button class="btn btn-outline-dark" onclick="window.print()">
+                    <i class="fas fa-print me-2"></i>Print Invoice
+                </button>
+            </div>
+            <hr>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body p-4">
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <h5 class="text-uppercase text-muted mb-2">Invoice Details</h5>
+                        <div class="mb-1"><strong>Invoice Number:</strong> @Model.InvoiceNumber</div>
+                        <div class="mb-1"><strong>Invoice Date:</strong> @Model.InvoiceDate.ToString("dd MMM yyyy, hh:mm tt")</div>
+                        <div><strong>Order ID:</strong> #@Model.OrderId</div>
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="mb-3">
+                        <h5 class="text-uppercase text-muted mb-2">Customer Details</h5>
+                        <div class="mb-1"><strong>Name:</strong> @Model.Order.CustomerName</div>
+                        <div class="mb-1"><strong>Email:</strong> @Model.Order.Email</div>
+                        <div><strong>Phone:</strong> @Model.Order.PhoneNumber</div>
+                    </div>
+                    <div>
+                        <h5 class="text-uppercase text-muted mb-2">Shipping Address</h5>
+                        <div>@Model.Order.Address</div>
+                    </div>
+                </div>
+            </div>
+
+            <h5 class="text-uppercase text-muted mb-3">Order Items</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Item</th>
+                            <th class="text-center">Quantity</th>
+                            <th class="text-end">Price</th>
+                            <th class="text-end">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Order.OrderItems)
+                        {
+                            <tr>
+                                <td>@item.ProductName</td>
+                                <td class="text-center">@item.Quantity</td>
+                                <td class="text-end">₹@item.Price.ToString("N2")</td>
+                                <td class="text-end">₹@((item.Price * item.Quantity).ToString("N2"))</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="text-end fw-bold">Subtotal:</td>
+                            <td class="text-end">₹@Model.Order.TotalAmount.ToString("N2")</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="text-end fw-bold">Shipping:</td>
+                            <td class="text-end">₹0.00</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="text-end fw-bold">Total:</td>
+                            <td class="text-end fs-5 fw-bold">₹@Model.TotalAmount.ToString("N2")</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="bg-light p-3 rounded">
+                        <h6 class="mb-2">Payment Information</h6>
+                        <p class="mb-0">Payment Status: <span class="badge bg-success">Paid</span></p>
+                        <p class="mb-0">Payment Method: Online</p>
+                        <p class="mb-0 small text-muted">Thank you for your purchase! If you have any questions, please contact our customer support.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 text-center">
+            <a asp-controller="Orders" asp-action="MyOrders" class="btn btn-primary">
+                <i class="fas fa-arrow-left me-2"></i>Back to My Orders
+            </a>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        @@media print {
+            .navbar, .footer, .btn, header {
+                display: none !important;
+            }
+            
+            body {
+                padding: 0;
+                margin: 0;
+            }
+            
+            .container {
+                width: 100%;
+                max-width: 100%;
+                padding: 0;
+                margin: 0;
+            }
+            
+            .card {
+                border: none;
+                box-shadow: none;
+            }
+        }
+    </style>
+}

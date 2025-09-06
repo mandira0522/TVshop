@@ -1,0 +1,473 @@
+@{
+    ViewData["Title"] = "About Us";
+}
+
+<style>
+    .about-section {
+        padding: 80px 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+        position: relative;
+        display: inline-block;
+    }
+
+    .section-title:after {
+        content: '';
+        position: absolute;
+        width: 50%;
+        height: 4px;
+        left: 0;
+        bottom: -10px;
+        background: linear-gradient(90deg, #ff6b6b, #556270);
+        border-radius: 2px;
+        transition: width 0.3s ease;
+    }
+
+    .section-title:hover:after {
+        width: 100%;
+    }
+
+    .about-text {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        margin-bottom: 30px;
+        color: #555;
+    }
+
+    .team-member {
+        margin-bottom: 30px;
+        position: relative;
+        transition: all 0.3s ease;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .team-member:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    }
+
+    .team-member img {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        transition: all 0.5s ease;
+    }
+
+    .team-member:hover img {
+        transform: scale(1.05);
+    }
+
+    .team-info {
+        padding: 20px;
+        background: white;
+        text-align: center;
+    }
+
+    .team-name {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .team-position {
+        color: #ff6b6b;
+        font-weight: 500;
+        margin-bottom: 1rem;
+    }
+
+    .social-links {
+        margin-top: 15px;
+    }
+
+    .social-links a {
+        display: inline-block;
+        margin: 0 10px;
+        color: #556270;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+        color: #ff6b6b;
+        transform: translateY(-3px);
+    }
+
+    .feature-box {
+        padding: 30px;
+        border-radius: 10px;
+        background: white;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        margin-bottom: 30px;
+        transition: all 0.3s ease;
+        border-left: 3px solid #ff6b6b;
+    }
+
+    .feature-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+    }
+
+    .feature-icon {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        color: #ff6b6b;
+    }
+
+    .feature-title {
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+
+    .parallax-bg {
+        background-image: url('https://images.unsplash.com/photo-1588508065123-287b28e013da?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 350px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        margin: 60px 0;
+    }
+
+    .parallax-bg:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    .parallax-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        color: white;
+    }
+
+    .brand-quote {
+        font-size: 2.5rem;
+        font-weight: 300;
+        font-style: italic;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .stats-section {
+        padding: 50px 0;
+        background: #f8f9fa;
+    }
+
+    .stat-box {
+        text-align: center;
+        padding: 30px 15px;
+    }
+
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 700;
+        color: #ff6b6b;
+        margin-bottom: 10px;
+    }
+
+    .stat-label {
+        font-size: 1.1rem;
+        color: #556270;
+    }
+
+    .timeline {
+        position: relative;
+        padding: 60px 0;
+    }
+
+    .timeline:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 4px;
+        height: 100%;
+        background: #f1f1f1;
+        transform: translateX(-50%);
+        border-radius: 2px;
+    }
+
+    .timeline-item {
+        position: relative;
+        margin-bottom: 50px;
+    }
+
+    .timeline-item:nth-child(even) .timeline-content {
+        margin-left: 50%;
+        padding-left: 50px;
+        text-align: left;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-content {
+        margin-right: 50%;
+        padding-right: 50px;
+        text-align: right;
+    }
+
+    .timeline-date {
+        position: absolute;
+        top: 0;
+        width: 120px;
+        padding: 5px 10px;
+        background: #ff6b6b;
+        color: white;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .timeline-item:nth-child(even) .timeline-date {
+        left: calc(50% - 130px);
+    }
+
+    .timeline-item:nth-child(odd) .timeline-date {
+        right: calc(50% - 130px);
+    }
+
+    .timeline-content {
+        padding: 20px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    }
+
+    .timeline-title {
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .timeline-item:before {
+        content: '';
+        position: absolute;
+        top: 10px;
+        width: 20px;
+        height: 20px;
+        background: #ff6b6b;
+        border-radius: 50%;
+        z-index: 1;
+    }
+
+    .timeline-item:nth-child(even):before {
+        left: calc(50% - 10px);
+    }
+
+    .timeline-item:nth-child(odd):before {
+        right: calc(50% - 10px);
+    }
+
+    @@media (max-width: 767px) {
+        .timeline:before {
+            left: 20px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content,
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin: 0 0 0 60px;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .timeline-date {
+            width: auto;
+            position: relative;
+            margin-bottom: 10px;
+            left: 0 !important;
+            right: 0 !important;
+            display: inline-block;
+        }
+
+        .timeline-item:before {
+            left: 10px !important;
+            right: auto !important;
+        }
+    }
+</style>
+
+<div class="about-section">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md-12 text-center">
+                <h1 class="section-title">About TvShop</h1>
+                <p class="lead about-text">
+                    We're revolutionizing how you shop for high-quality televisions and entertainment systems with cutting-edge technology and exceptional customer service.
+                </p>
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-md-6">
+                <p class="about-text">
+                    Founded in 2020, TvShop was born from a simple idea: make buying premium televisions an enjoyable, hassle-free experience. We curate the best brands and latest models, providing detailed information to help you make informed decisions.
+                </p>
+                <p class="about-text">
+                    Our team of tech enthusiasts and customer service experts is dedicated to helping you find the perfect TV for your home or office. We don't just sell TVs; we create entertainment experiences that transform living spaces.
+                </p>
+            </div>
+            <div class="col-md-6">
+                <img src="https://images.unsplash.com/photo-1593784991095-a205069470b6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" class="img-fluid rounded shadow" alt="Modern TV Setup">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h3 class="feature-title">Quality Guaranteed</h3>
+                    <p>We partner with trusted brands and manufacturers to ensure every product meets our high standards.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h3 class="feature-title">Fast Delivery</h3>
+                    <p>Our efficient logistics network ensures your new TV arrives quickly and in perfect condition.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3 class="feature-title">Expert Support</h3>
+                    <p>Our knowledgeable team is always ready to help with setup, troubleshooting, or any questions.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="parallax-bg">
+    <div class="parallax-content">
+        <p class="brand-quote">"We don't just sell televisions. We deliver entertainment experiences that bring families together."</p>
+    </div>
+</div>
+
+<div class="about-section">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md-12 text-center">
+                <h2 class="section-title">Our Journey</h2>
+            </div>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">2020</div>
+                <div class="timeline-content">
+                    <h4 class="timeline-title">The Beginning</h4>
+                    <p>TvShop was founded with a mission to revolutionize the TV shopping experience.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2021</div>
+                <div class="timeline-content">
+                    <h4 class="timeline-title">Growing Fast</h4>
+                    <p>Expanded our product line and opened our first physical showroom.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2022</div>
+                <div class="timeline-content">
+                    <h4 class="timeline-title">Innovation</h4>
+                    <p>Launched our augmented reality app allowing customers to visualize TVs in their homes.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2023</div>
+                <div class="timeline-content">
+                    <h4 class="timeline-title">Award Winning</h4>
+                    <p>Recognized as "Best Online Electronics Retailer" for customer satisfaction.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2024</div>
+                <div class="timeline-content">
+                    <h4 class="timeline-title">Today & Beyond</h4>
+                    <p>Continuing to expand our offerings and enhance the customer experience with innovative features.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="stats-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="stat-box">
+                    <div class="stat-number">10,000+</div>
+                    <div class="stat-label">Happy Customers</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-box">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Products</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-box">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Brands</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-box">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Customer Support</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Animate elements when they come into view
+        $(document).ready(function() {
+            // Animate section titles
+            $('.section-title').each(function() {
+                $(this).addClass('animate__animated animate__fadeInUp');
+            });
+            
+            // Initialize stats counter animation
+            $('.stat-number').each(function () {
+                $(this).prop('Counter', 0).animate({
+                    Counter: $(this).text().replace(/[^0-9]/g, '')
+                }, {
+                    duration: 2000,
+                    easing: 'swing',
+                    step: function (now) {
+                        // Only animate numeric values
+                        if(!isNaN(this.Counter)) {
+                            $(this).text(Math.ceil(now));
+                        } else {
+                            $(this).text(this.Counter);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}

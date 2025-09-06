@@ -1,0 +1,86 @@
+@page
+@model TvShop.Areas.Identity.Pages.Account.AccessDeniedModel
+@{
+    ViewData["Title"] = "Access Denied";
+    Layout = "_Layout";
+}
+
+<link rel="stylesheet" href="~/css/auth.css" asp-append-version="true" />
+
+<div class="auth-body">
+    <div class="auth-container auth-container-lg">
+        <img src="~/uploads/logo/profile.png" alt="Profile" width="100" class="auth-logo mb-3" style="border-radius: 50%;">
+        <h2 class="auth-title">Access Denied</h2>
+        
+        <div class="auth-alert auth-alert-danger text-center">
+            <i class="fas fa-ban fa-3x mb-3"></i>
+            <h4>You do not have permission to access this resource</h4>
+            <p>Sorry, but you don't have the necessary permissions to view this page. If you believe this is an error, please contact the administrator.</p>
+        </div>
+        
+        <div class="auth-access-denied-graphic">
+            <i class="fas fa-lock fa-4x mb-4"></i>
+            <div class="access-denied-pulse"></div>
+        </div>
+        
+        <div class="mt-4 d-flex justify-content-center">
+            <a href="/" class="auth-btn me-3">
+                <i class="fas fa-home me-2"></i>Go to Home
+            </a>
+            <a href="javascript:history.back()" class="auth-btn auth-btn-outline">
+                <i class="fas fa-arrow-left me-2"></i>Go Back
+            </a>
+        </div>
+        
+        @if (!string.IsNullOrEmpty(Model.ReturnUrl) && Model.ReturnUrl != "/")
+        {
+            <div class="text-center mt-3">
+                <a href="@Model.ReturnUrl" class="auth-link">
+                    <i class="fas fa-external-link-alt me-1"></i>Go to Requested URL
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .auth-container-lg {
+            max-width: 500px;
+        }
+        
+        .auth-access-denied-graphic {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 2rem 0;
+            color: var(--danger-color);
+        }
+        
+        .access-denied-pulse {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(255, 71, 87, 0.2);
+            z-index: -1;
+            animation: pulse 2s infinite;
+        }
+        
+        @@keyframes pulse {
+            0% {
+                transform: scale(0.8);
+                opacity: 0.8;
+            }
+            70% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+        }
+    </style>
+}

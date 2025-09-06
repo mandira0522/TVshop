@@ -1,0 +1,221 @@
+@model TvShop.Models.Order
+
+@{
+    ViewData["Title"] = "Order Tracking";
+}
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h2>Track Order #@Model.Id</h2>
+                </div>
+                <div class="card-body">
+                    <!-- Order Status Timeline -->
+                    <div class="mb-5">
+                        <h4 class="mb-3">Order Status</h4>
+                        <div class="position-relative m-4">
+                            <div class="progress" style="height: 5px;">
+                                <div class="progress-bar bg-success" role="progressbar" 
+                                     style="width: @GetOrderProgressPercentage()%;" 
+                                     aria-valuenow="@GetOrderProgressPercentage()" 
+                                     aria-valuemin="0" 
+                                     aria-valuemax="100">
+                                </div>
+                            </div>
+                            <div class="position-absolute top-0 start-0 translate-middle bg-@GetStatusColor(OrderStatus.Pending) rounded-circle p-2">
+                                <i class="bi bi-check-circle-fill text-white"></i>
+                            </div>
+                            <div class="position-absolute top-0 start-25 translate-middle bg-@GetStatusColor(OrderStatus.Processing) rounded-circle p-2">
+                                <i class="bi bi-gear-fill text-white"></i>
+                            </div>
+                            <div class="position-absolute top-0 start-50 translate-middle bg-@GetStatusColor(OrderStatus.Shipped) rounded-circle p-2">
+                                <i class="bi bi-truck text-white"></i>
+                            </div>
+                            <div class="position-absolute top-0 start-75 translate-middle bg-@GetStatusColor(OrderStatus.Delivered) rounded-circle p-2">
+                                <i class="bi bi-house-door-fill text-white"></i>
+                            </div>
+                            <div class="position-absolute top-0 start-100 translate-middle bg-@GetStatusColor(OrderStatus.Delivered) rounded-circle p-2">
+                                <i class="bi bi-check2-all text-white"></i>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between text-center mt-3 mb-4">
+                            <div>
+                                <p class="mb-0 fw-bold">Order Placed</p>
+                                <small class="text-muted">@Model.OrderDate.ToString("MMM dd, yyyy")</small>
+                            </div>
+                            <div>
+                                <p class="mb-0 fw-bold">Processing</p>
+                                <small class="text-muted">@(Model.Status == OrderStatus.Processing ? "In process" : (IsStatusReached(OrderStatus.Processing) ? "Pending" : "Pending"))</small>
+                            </div>
+                            <div>
+                                <p class="mb-0 fw-bold">Shipped</p>
+                                <small class="text-muted">@(Model.Status == OrderStatus.Shipped ? "In transit" : (IsStatusReached(OrderStatus.Shipped) ? "Pending" : "Pending"))</small>
+                            </div>
+                            <div>
+                                <p class="mb-0 fw-bold">Out for Delivery</p>
+                                <small class="text-muted">@(IsStatusReached(OrderStatus.Delivered) ? "Pending" : "Pending")</small>
+                            </div>
+                            <div>
+                                <p class="mb-0 fw-bold">Delivered</p>
+                                <small class="text-muted">@(Model.Status == OrderStatus.Delivered ? "In transit" : "Pending")</small>
+                            </div>
+                        </div>
+                        <div class="alert alert-@GetAlertClass() mb-4">
+                            <h5 class="alert-heading"><i class="bi bi-info-circle-fill me-2"></i>Current Status:</h5>
+                            <p class="mb-0">@GetStatusMessage()</p>
+                        </div>
+                    </div>
+
+                    <!-- Order Details -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-light">
+                                    <h5 class="mb-0">Order Information</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p><strong>Order Number:</strong> #@Model.Id</p>
+                                    <p><strong>Order Date:</strong> @Model.OrderDate.ToString("MMMM dd, yyyy hh:mm tt")</p>
+                                    <p><strong>Total Amount:</strong> ₹@Model.TotalAmount.ToString("N2")</p>
+                                    <p><strong>Payment ID:</strong> @(string.IsNullOrEmpty(Model.PaymentId) ? "Not paid" : Model.PaymentId)</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-light">
+                                    <h5 class="mb-0">Shipping Information</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p><strong>Name:</strong> @Model.CustomerName</p>
+                                    <p><strong>Address:</strong> @Model.Address</p>
+                                    <p><strong>Email:</strong> @Model.Email</p>
+                                    <p><strong>Phone:</strong> @(string.IsNullOrEmpty(Model.PhoneNumber) ? "Not provided" : Model.PhoneNumber)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order Items -->
+                    <div class="card mb-3">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0">Order Items</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Image</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Subtotal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if(Model.OrderItems != null)
+                                        {
+                                            @foreach (var item in Model.OrderItems)
+                                            {
+                                                <tr>
+                                                    <td>@item.ProductName</td>
+                                                    <td><img src="@item.MainImageUrl" alt="@item.ProductName" class="img-thumbnail" style="max-width: 100px; height: auto;" /></td>
+                                                    <td>₹@item.Price.ToString("N2")</td>
+                                                    <td>@item.Quantity</td>
+                                                    <td>₹@((item.Price * item.Quantity).ToString("N2"))</td>
+                                                </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td colspan="5" class="text-center">No items found for this order.</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="4" class="text-end"><strong>Total:</strong></td>
+                                            <td>₹@Model.TotalAmount.ToString("N2")</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="MyOrders" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Back to Orders</a>
+                        <a asp-action="ViewInvoice" asp-route-id="@Model.Id" class="btn btn-primary">View Invoice <i class="bi bi-file-earmark-text"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+}
+
+@functions {
+    private string GetStatusColor(OrderStatus status)
+    {
+        return status switch
+        {
+            OrderStatus.Pending => "secondary",
+            OrderStatus.Processing => "primary",
+            OrderStatus.Shipped => "info",
+            OrderStatus.Delivered => "success",
+            OrderStatus.Cancelled => "danger",
+            _ => "secondary"
+        };
+    }
+
+    private bool IsStatusReached(OrderStatus targetStatus)
+    {
+        return Model.Status >= targetStatus;
+    }
+
+    private int GetOrderProgressPercentage()
+    {
+        return Model.Status switch
+        {
+            OrderStatus.Pending => 0,
+            OrderStatus.Processing => 25,
+            OrderStatus.Shipped => 50,
+            OrderStatus.Delivered => 75,
+            OrderStatus.Cancelled => 0,
+            _ => 0
+        };
+    }
+
+    private string GetAlertClass()
+    {
+        return Model.Status switch
+        {
+            OrderStatus.Pending => "info",
+            OrderStatus.Processing => "primary",
+            OrderStatus.Shipped => "info",
+            OrderStatus.Delivered => "success",
+            OrderStatus.Cancelled => "danger",
+            _ => "secondary"
+        };
+    }
+
+    private string GetStatusMessage()
+    {
+        return Model.Status switch
+        {
+            OrderStatus.Pending => "Your order has been received and is being prepared for processing.",
+            OrderStatus.Processing => "Your order is currently being processed and prepared for shipment.",
+            OrderStatus.Shipped => "Your order has been shipped and is on its way to you!",
+            OrderStatus.Delivered => "Your order has been delivered. Enjoy your purchase!",
+            OrderStatus.Cancelled => "We're sorry, but your order has been cancelled.",
+            _ => "Order status information not available."
+        };
+    }
+}
